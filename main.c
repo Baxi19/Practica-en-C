@@ -37,6 +37,17 @@ void* nuevaPreguntaVerdaderoFalso (char* pregunta, char* s1, char* s2,  char* co
     return verdaderoFalso;
 }
 
+void* nuevaPreguntaSeleccionUnica (char* pregunta, char* s1, char* s2, char* s3, char* s4,  char* correcta){
+    struct SeleccionUnica* seleccionUnica;
+    seleccionUnica = (struct SeleccionUnica*) malloc(sizeof(struct SeleccionUnica));
+    seleccionUnica->pregunta = pregunta;
+    seleccionUnica->s1 = s1;
+    seleccionUnica->s2 = s2;
+    seleccionUnica->s3 = s3;
+    seleccionUnica->s4 = s4;
+    seleccionUnica->correcta = correcta;
+    return seleccionUnica;
+}
 
 
 void insertarPregunta(void* nuevaPregunta, Tipo tipo){
@@ -108,6 +119,37 @@ void obtenerDatosVerdaderoFalso(){
     insertarPregunta(nuevaPreguntaVerdaderoFalso(pregunta,s1,s2, correcta), VERDADERO_FALSO);
 }
 
+void obtenerDatosSeleccionUnica(){
+    char* pregunta = (char *) malloc(1);
+    char* s1 = (char *) malloc(1);
+    char* s2 = (char *) malloc(1);
+    char* s3 = (char *) malloc(1);
+    char* s4 = (char *) malloc(1);
+    char* correcta = (char *) malloc(1);
+
+    fflush(stdin);
+    printf( "\nIngrese la pregunta:");
+    scanf("%[^\n]s",pregunta);
+    fflush(stdin);
+    printf( "\nIngrese la respuesta #1:");
+    scanf("%[^\n]s",s1);
+    fflush(stdin);
+    printf( "\nIngrese la respuesta #2:");
+    scanf("%[^\n]s",s2);
+    fflush(stdin);
+    printf( "\nIngrese la respuesta #3:");
+    scanf("%[^\n]s",s3);
+    fflush(stdin);
+    printf( "\nIngrese la respuesta #4:");
+    scanf("%[^\n]s",s4);
+    fflush(stdin);
+    printf( "\nSeleccione la respuesta correcta (1-4)");
+    scanf("%[^\n]s", correcta);
+    fflush(stdin);
+
+    insertarPregunta(nuevaPreguntaSeleccionUnica(pregunta,s1,s2,s3, s4, correcta), SELECCION_UNICA);
+}
+
 int main() {
     int  opcion;
     do
@@ -138,7 +180,7 @@ int main() {
                             obtenerDatosVerdaderoFalso();
                             break;
                         case 2: printf( "\n   Seleccion Unica: \n", 163 );
-
+                            obtenerDatosSeleccionUnica();
                             break;
                     }
 
