@@ -1,3 +1,3 @@
-C:/Users/Baxi/Documents/C Proyects/PracticaSemana4/cmake-build-debug/CMakeFiles/PracticaSemana4.dir
-C:/Users/Baxi/Documents/C Proyects/PracticaSemana4/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Baxi/Documents/C Proyects/PracticaSemana4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Baxi/Documents/C Proyects/Practica-en-C/cmake-build-debug/CMakeFiles/PracticaSemana4.dir
+C:/Users/Baxi/Documents/C Proyects/Practica-en-C/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Baxi/Documents/C Proyects/Practica-en-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir

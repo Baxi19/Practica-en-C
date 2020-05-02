@@ -26,19 +26,14 @@ struct nodoPregunta{
     struct nodoPregunta* sig;
 } *cabeza;
 
-void* nuevaPreguntaVerdaderoFalso (char pregunta[], char s1[], char s2[],  char correcta[]){
+
+void* nuevaPreguntaVerdaderoFalso (char* pregunta, char* s1, char* s2,  char* correcta){
     struct VerdaderoFalso* verdaderoFalso;
     verdaderoFalso = (struct VerdaderoFalso*) malloc(sizeof(struct VerdaderoFalso));
     verdaderoFalso->pregunta = pregunta;
     verdaderoFalso->s1 = s1;
     verdaderoFalso->s2 = s2;
     verdaderoFalso->correcta = correcta;
-
-    printf("\n%s", verdaderoFalso->pregunta);  /*REVISAR DATOS QUE LLEGAN AQUI*/
-    printf("\n%s", verdaderoFalso->s1);
-    printf("\n%s", verdaderoFalso->s2);
-    printf("\n%s", verdaderoFalso->correcta);
-
     return verdaderoFalso;
 }
 
@@ -69,7 +64,7 @@ void imprimirPreguntas(){
     else
         while(act!=NULL){
             if (act->tipo==0){
-                printf("Pregunta: %s, 1): %s, 2) %s, Correcta: %s\n",
+                printf("(Pregunta Verdadero o Falso): %s  (Opcion 1): %s  (Opcion 2): %s  (Opcion Correcta): %s \n",
                         ((struct VerdaderoFalso*)act->pregunta)->pregunta,
                         ((struct VerdaderoFalso*)act->pregunta)->s1,
                         ((struct VerdaderoFalso*)act->pregunta)->s2,
@@ -77,7 +72,7 @@ void imprimirPreguntas(){
 
             }
             else {
-                printf("Pregunta: %s, 1): %s, 2) %s, 3): %s, 4) %s, Correcta: %s\n",
+                printf("(Pregunta Seleccion Unica): %s, (Opcion 1): %s, (Opcion 2): %s, (Opcion 3): %s, (Opcion 4): %s, (Opcion Correcta): %s\n",
                         ((struct SeleccionUnica*)act->pregunta)->pregunta,
                         ((struct SeleccionUnica*)act->pregunta)->s1,
                         ((struct SeleccionUnica*)act->pregunta)->s2,
@@ -90,12 +85,11 @@ void imprimirPreguntas(){
         }
 }
 
-char obtenerDatosVerdaderoFalso(){
-
-    char pregunta[150];
-    char s1[100];
-    char s2[100];
-    char correcta[100];
+void obtenerDatosVerdaderoFalso(){
+    char* pregunta = (char *) malloc(1);
+    char* s1 = (char *) malloc(1);
+    char* s2 = (char *) malloc(1);
+    char* correcta = (char *) malloc(1);
 
     fflush(stdin);
     printf( "\nIngrese la pregunta:");
@@ -112,8 +106,6 @@ char obtenerDatosVerdaderoFalso(){
     fflush(stdin);
 
     insertarPregunta(nuevaPreguntaVerdaderoFalso(pregunta,s1,s2, correcta), VERDADERO_FALSO);
-
-    return 't';
 }
 
 int main() {
@@ -161,8 +153,6 @@ int main() {
 
             case 3: printf( "*********************************************************************************"
                             "\n   Datos de Examen: \n", 163 );
-                //scanf( "%d", &n );
-                //printf( "\n   El cuadrado de %d es %d\n\n", n, ( int ) pow( n, 2 ) );
                 imprimirPreguntas();
                 break;
         }
