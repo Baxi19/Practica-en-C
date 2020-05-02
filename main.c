@@ -75,7 +75,7 @@ void imprimirPreguntas(){
     else
         while(act!=NULL){
             if (act->tipo==0){
-                printf("(Pregunta Verdadero o Falso): %s  (Opcion 1): %s  (Opcion 2): %s  (Opcion Correcta): %s \n",
+                printf("(Pregunta Verdadero o Falso): %s  (Opcion 1): %s  (Opcion 2): %s  (Correcta): %s \n",
                         ((struct VerdaderoFalso*)act->pregunta)->pregunta,
                         ((struct VerdaderoFalso*)act->pregunta)->s1,
                         ((struct VerdaderoFalso*)act->pregunta)->s2,
@@ -83,7 +83,7 @@ void imprimirPreguntas(){
 
             }
             else {
-                printf("(Pregunta Seleccion Unica): %s, (Opcion 1): %s, (Opcion 2): %s, (Opcion 3): %s, (Opcion 4): %s, (Opcion Correcta): %s\n",
+                printf("(Pregunta Seleccion Unica): %s, (Opcion 1): %s, (Opcion 2): %s, (Opcion 3): %s, (Opcion 4): %s, (Correcta): %s\n",
                         ((struct SeleccionUnica*)act->pregunta)->pregunta,
                         ((struct SeleccionUnica*)act->pregunta)->s1,
                         ((struct SeleccionUnica*)act->pregunta)->s2,
@@ -150,6 +150,74 @@ void obtenerDatosSeleccionUnica(){
     insertarPregunta(nuevaPreguntaSeleccionUnica(pregunta,s1,s2,s3, s4, correcta), SELECCION_UNICA);
 }
 
+double largoLista(){
+    double i = 0.0;
+    struct nodoPregunta* temp=cabeza;
+    if (cabeza!=NULL){
+        do {
+            i+=1;
+            temp = temp->sig;
+        }
+        while(temp!=NULL);
+    }
+    return i;
+}
+
+char solucionarPreguntas(){
+    struct nodoPregunta* act = cabeza;
+    printf("\n********* Preguntas de Examen*********\n");
+    if (act == NULL){
+        printf("\nExamen sin preguntas");
+    }else{
+        int puntos = 0;
+        while(act!=NULL){
+            if (act->tipo==0){
+                char* correcta = (char *) malloc(1);
+                printf("\n\n(Pregunta Verdadero o Falso): %s\n" , ((struct VerdaderoFalso*)act->pregunta)->pregunta);
+                printf("\n(Opcion 1): %s" , ((struct VerdaderoFalso*)act->pregunta)->s1);
+                printf("\n(Opcion 2): %s" , ((struct VerdaderoFalso*)act->pregunta)->s2);
+
+                printf( "\nSeleccione la respuesta correcta (1-2)");
+                fflush(stdin);
+                scanf("%[^\n]s", correcta);
+                fflush(stdin);
+
+                int result;
+                result = strcmp(correcta, ((struct VerdaderoFalso*)act->pregunta)->correcta);
+                if(result == 0){
+                    puntos +=1;
+                }
+
+            }
+
+            else {
+                char* correcta = (char *) malloc(1);
+                printf("\n\n(Pregunta Seleccion Unica): %s\n" , ((struct SeleccionUnica*)act->pregunta)->pregunta);
+                printf("\n(Opcion 1): %s" , ((struct SeleccionUnica*)act->pregunta)->s1);
+                printf("\n(Opcion 2): %s" , ((struct SeleccionUnica*)act->pregunta)->s2);
+                printf("\n(Opcion 3): %s" , ((struct SeleccionUnica*)act->pregunta)->s3);
+                printf("\n(Opcion 4): %s" , ((struct SeleccionUnica*)act->pregunta)->s4);
+
+                printf( "\nSeleccione la respuesta correcta (1-4)");
+                fflush(stdin);
+                scanf("%[^\n]s", correcta);
+                fflush(stdin);
+
+                int result;
+                result = strcmp(correcta, ((struct SeleccionUnica*)act->pregunta)->correcta);
+                if(result == 0){
+                    puntos +=1;
+                }
+
+            }
+            act = act->sig;
+        }
+        double preguntas = largoLista();
+        double resultado = ((puntos/preguntas)*100);
+        printf("\nResultado de Examen %f \n", resultado);
+    }
+    return 't';
+}
 int main() {
     int  opcion;
     do
@@ -163,12 +231,12 @@ int main() {
 
         switch ( opcion )
         {
-            case 1: printf( "*********************************************************************************"
-                            "\n   Introduzca el tipo de pregunta que desee crear: \n", 163 );
+            case 1: printf( "*********************************************************************************");
                 int  opcion;
                 do
                 {
-                    printf( "\n   1. Falso o Verdadero", 163 );
+                    printf( "\n   Introduzca el tipo de pregunta que desee crear:\n" );
+                    printf( "\n   1. Falso o Verdadero" );
                     printf( "\n   2. Seleccion Unica", 163 );
                     printf( "\n   3. Salir." );
                     printf( "\n\n   Introduzca opci%cn (1-3): ", 162 );
@@ -187,10 +255,8 @@ int main() {
                 } while ( opcion != 3 );
                 break;
 
-            case 2: printf( "*********************************************************************************"
-                            "\n   Inicio de Examen: \n", 163 );
-                //scanf( "%d", &n );
-                //printf( "\n   La mitad de %d es %f\n\n", n, ( float ) n / 2 );
+            case 2: printf( "*********************************************************************************");
+                solucionarPreguntas();
                 break;
 
             case 3: printf( "*********************************************************************************"
@@ -203,30 +269,6 @@ int main() {
     } while ( opcion != 4 );
 
     return 0;
-/*
 
-    char* laMarca = (char*) malloc(1);
-    strcpy(laMarca,"Nike");
-
-    insertarArchivo(nuevoExamen(laMarca, 35, 30000), VERDADERO_FALSO);
-    insertarArchivo(nuevaSolucion("Arena", 15000, "Camiseta", 'H'), SELECCION_UNICA);
-    insertarArchivo(nuevaPreguntaVerdaderoFalso("Adidas", 40, 27500), VERDADERO_FALSO);
-    insertarPregunta(nuevaPreguntaSeleccionUnica("Loft", 12000, "Blusa", 'M'), SELECCION_UNICA);
-    imprimirArchivos();
-    eliminarArchivo(1);
-    imprimirArchivos();
-    eliminarArchivo(4); //DEBE GENERAR ERROR DE ELIMINACIÓN
-    imprimirArchivos();
-    eliminarArchivo(0);
-    imprimirArchivos();
-    eliminarArchivo(1);
-    imprimirArchivos();
-    eliminarArchivo(1); //DEBE GENERAR ERROR DE ELIMINACIÓN
-    imprimirArchivos();
-    eliminarPregunta(0);
-    imprimirPreguntas();
-
-    return 0;
-    */
 }
 
