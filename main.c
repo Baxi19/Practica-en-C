@@ -86,9 +86,13 @@ void imprimirPreguntas(){
     printf(" *******************Mostrando Preguntas y solucion********************************\n");
 
     struct nodoPregunta* act = cabeza;
-    if (act == NULL)
-        printf("La lista se encuentra vacia\n");
-    else{
+    if (act == NULL){
+        printf("Primero debe agregar las preguntas del Examen\n");
+        return;
+    }else if(((struct VerdaderoFalso*)act->pregunta)->respuestaUsuario == NULL){
+        printf("Aun debe solucionar el examen\n");
+        return;
+    }else{
         int puntos = 0;
         while(act!=NULL){
             printf("\n*********************************************************************************");
@@ -184,12 +188,13 @@ void obtenerDatosSeleccionUnica(){
     insertarPregunta(nuevaPreguntaSeleccionUnica(pregunta,s1,s2,s3, s4, correcta), SELECCION_UNICA);
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
-char solucionarPreguntas(){
+void solucionarPreguntas(){
     printf("*********************************************************************************\n");
     printf(" ************************ Preguntas de Examen*************************************\n");
     struct nodoPregunta* act = cabeza;
     if (act == NULL){
         printf("El Examen se encuentra sin preguntas!!\n");
+        return;
     }else{
         int puntos = 0;
         while(act!=NULL){
@@ -232,7 +237,6 @@ char solucionarPreguntas(){
         double resultado = ((puntos/preguntas)*100);
         printf("\nResultado de Examen %f \n", resultado);
     }
-    return 't';
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 int main() {
