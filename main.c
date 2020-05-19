@@ -81,18 +81,17 @@ double largoExamen(){
     return i;
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
-void imprimirPreguntas(){
-    printf("*********************************************************************************\n");
-    printf(" *******************Mostrando Preguntas y solucion********************************\n");
-
+void imprimirPreguntas(int solucion){
     struct nodoPregunta* act = cabeza;
-    if (act == NULL){
-        printf("Primero debe agregar las preguntas del Examen\n");
+    if (act == NULL) {
+        printf("\n=>Primero debe agregar las preguntas del Examen\n");
         return;
-    }else if(((struct VerdaderoFalso*)act->pregunta)->respuestaUsuario == NULL){
-        printf("Aun debe solucionar el examen\n");
+    }else if(solucion == 0){
+        printf("\n=>Aun debe solucionar el examen\n");
         return;
     }else{
+        printf("*********************************************************************************\n");
+        printf(" *******************Mostrando Preguntas y solucion********************************");
         int puntos = 0;
         while(act!=NULL){
             printf("\n*********************************************************************************");
@@ -189,13 +188,13 @@ void obtenerDatosSeleccionUnica(){
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
 void solucionarPreguntas(){
-    printf("*********************************************************************************\n");
-    printf(" ************************ Preguntas de Examen*************************************\n");
     struct nodoPregunta* act = cabeza;
     if (act == NULL){
-        printf("El Examen se encuentra sin preguntas!!\n");
+        printf("=>El Examen se encuentra sin preguntas!!\n");
         return;
     }else{
+        printf("*********************************************************************************\n");
+        printf(" ************************ Preguntas de Examen*************************************\n");
         int puntos = 0;
         while(act!=NULL){
             if (act->tipo==0){
@@ -241,8 +240,9 @@ void solucionarPreguntas(){
 /*--------------------------------------------------------------------------------------------------------------------*/
 int main() {
     int  opcion;
+    int solucion = 0;
     do
-    {   printf("*********************************************************************************");
+    {   printf("\n*********************************************************************************");
         printf( "\n   1. Crear Examen", 163 );
         printf( "\n   2. Solucionar el Examen", 163 );
         printf( "\n   3. Imprimir Examen", 163 );
@@ -252,6 +252,7 @@ int main() {
 
         switch ( opcion ){
             case 1:
+                solucion = 0;
                 printf( "");
                 int  opcion;
                 do{
@@ -276,9 +277,10 @@ int main() {
 
             case 2:
                 solucionarPreguntas();
+                solucion = 1;
                 break;
             case 3:
-                imprimirPreguntas();
+                imprimirPreguntas(solucion);
                 break;
         }
     } while ( opcion != 4 );
